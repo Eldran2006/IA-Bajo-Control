@@ -1,0 +1,29 @@
+Actúa como un Desarrollador Web Senior y Diseñador UX/UI. Tu objetivo es crear un prototipo funcional y estilizado de una interfaz de página web de reservas para un hotel. Proporciona la respuesta dividida exactamente en las siguientes secciones: 
+
+1. Requisitos y Alcance del Prototipo 
+
+   - Arquitectura y Tecnologías: HTML y CSS. Sin dependencias externas ni frameworks JavaScript masivos. 
+
+   - Cabecera con navegación y título contextual. 
+
+   - Formulario de reserva con validación básica de inputs (fechas, número de huéspedes, categoría/servicio, datos de contacto). 
+
+    - Panel de resumen en tiempo real con datos ficticios (precios, desgloses, tasas, total). 
+
+    - Estado de confirmación claro (botón de acción principal). 
+
+   - Accesibilidad y Diseño Responsive: Soporte para dispositivos móviles y desktop mensajes adecuados en formularios y buen contraste de color. 
+
+2. Estructura de Componentes 
+
+   - Describe la jerarquía del DOM y la organización de la interfaz. 
+
+3. Código Prototipo (HTML + CSS) 
+
+   - Un bloque de código limpio para cada lenguaje y listo para ejecutarse en dos archivos separados (index.html y styles.css). 
+
+   - Incluye datos ficticios realistas para la reserva (Reserva de hotel, experiencia para 2 adultos, fechas preseleccionadas, desglose de costes e impuestos). 
+
+   - Estilizado profesional, moderno y alineado con buenas prácticas de UI.
+
+Genera el código y la explicación manteniendo una redacción técnica, clara y directa.

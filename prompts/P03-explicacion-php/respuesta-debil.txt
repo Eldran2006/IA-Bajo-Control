@@ -1,0 +1,1 @@
+Nos ha explicado lo básico de PHP con características, ventajas, desventajas y con un ejemplo sencillo.

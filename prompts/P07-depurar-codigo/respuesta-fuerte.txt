@@ -1,0 +1,59 @@
+Supuestos
+
+Entorno: Node.js (v18+) / Navegadores modernos compatibles con ES6+. 
+
+Versión de ECMAScript: ES2015 (ES6) o superior. 
+
+Entradas esperadas: Se asume que min y max son números enteros, donde min <= max. Si se pasan decimales o strings numéricos, JavaScript realiza coerción implícita, pero el resultado puede desviar la intención original si se esperaban estrictamente enteros en los límites. 
+	
+Severidad 
+	
+Estado 
+
+H1 
+	
+Rango invertido (min > max): Si min es mayor que max, la fórmula produce un cálculo negativo (max - min + 1), devolviendo un número fuera del rango esperado o inconsistente. 
+
+Resultado incorrecto 
+
+Confirmado 
+
+H2 
+
+Entradas no numéricas o NaN / undefined: Si alguno de los argumentos es NaN o undefined, toda la operación aritmética resulta en NaN de forma silenciosa sin lanzar un error descriptivo. 
+
+Resultado incorrecto 
+
+Confirmado 
+
+H3 
+
+Uso de Math.random() para contextos criptográficos: Si esta función se utiliza para generación de tokens, contraseñas o seguridad, Math.random es predecible y criptográficamente inseguro. (Nota: ¿Es intencional el uso de Math.random estándar para lógica general/lúdica?) 
+
+Seguridad 
+
+Probable (Pregunta) 
+
+Reproducción 
+
+Script ejecutable usando node:assert para evidenciar el fallo cuando se pasa un rango invertido (min > max) o entradas inválidas (NaN): 
+
+El script de reproducción llama a obtenerNumeroAleatorio con min = 10 y max = 1, es decir, con un rango invertido. Muestra la entrada y el valor obtenido, que en lugar de lanzar un error cae en un intervalo sin sentido (entre 2 y 9), y lo compara con lo esperado. Así evidencia el fallo sin modificar la función. Al ejecutarlo con Node, la salida muestra ese resultado incorrecto. 
+
+Corrección 
+
+Cambio mínimo aplicando validación defensiva de tipos y lógica de rangos sin alterar la interfaz pública: 
+
+La versión corregida comprueba primero que min y max sean números válidos, incluido NaN, y lanza un TypeError si no lo son. Después lanza un RangeError si min es mayor que max. Solo si ambas comprobaciones pasan, calcula el resultado con la misma fórmula de antes, por lo que las llamadas válidas devuelven el mismo tipo de número. La firma de la función no cambia. 
+
+Prueba 
+
+Prueba unitaria utilizando el módulo nativo node:test y node:assert:
+
+Es una prueba unitaria con node:test y node:assert. Comprueba que la función corregida devuelve enteros dentro del rango en los casos válidos, que lanza RangeError cuando min es mayor que max y que lanza TypeError con cadenas o NaN. Con el código original, las pruebas de error fallan; con el corregido, todas deben pasar. El resumen de node:test indica cuántas pasan y cuántas fallan. 
+
+Riesgos Pendientes 
+
+Precisión de enteros grandes: Si se usan números que exceden Number.SAFE_INTEGER, las operaciones aritméticas de punto flotante en JavaScript pueden perder precisión. No aplica para rangos cotidianos, pero es un factor a tener en cuenta si se manejan IDs masivos. 
+
+Seguridad criptográfica: Si el propósito del sistema requiere aleatoriedad segura (ej. criptografía), se debe migrar de Math.random() a crypto.getRandomValues().

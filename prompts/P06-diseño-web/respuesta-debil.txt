@@ -1,0 +1,3 @@
+¡Con gusto! Antes de diseñarla, cuéntame de qué trata la web. ¿Es para un proyecto de clase, un portfolio, una tienda, un blog o algo más? 
+
+Si me das también algo de estilo (colores que te gusten, un tono minimalista, juvenil o más serio) y el contenido principal que debería tener (secciones, textos, imágenes), puedo crear una página web completa en HTML, CSS y JavaScript que puedas abrir en el navegador y publicar.

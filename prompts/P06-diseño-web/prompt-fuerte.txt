@@ -1,0 +1,27 @@
+Actúa como desarrollador front-end senior especializado en diseño web y accesibilidad (WCAG 2.2 AA).  
+
+Tarea: crear un diseño web bonito y accesible, y mejorar el prototipo del "caso 1" ([ruta del archivo o carpeta]; si no lo encuentras, indícamelo y sigue con supuestos documentados). 
+
+1. Antes de programar, escribe DESIGN_BRIEF.md con: 
+
+   - Público objetivo y dispositivos principales (marca los supuestos). 
+
+   - Contenido por sección, usando solo lo real del prototipo; marca lo que falte como [TEXTO PENDIENTE]. 
+
+   - Objetivo de la página y acción principal esperada. 
+
+   - Criterios de diseño: paleta en variables CSS, máximo dos tipografías, escala tipográfica, espaciado en sistema, un CTA principal por sección, mobile-first, estética propia y sin plantillas genéricas. 
+
+2. Mejora el prototipo con HTML semántico (header, nav, main, section, footer; un único h1), CSS organizado y JavaScript solo si es imprescindible. Explica en una lista los cambios principales. 
+
+3. Verifica y corrige en ACCESSIBILITY_REPORT.md: 
+
+   - Etiquetas: label asociado a cada campo, alt correcto en imágenes, texto de enlaces y botones claro, errores anunciados. 
+
+   - Teclado: orden de tabulación lógico, enlace "Saltar al contenido", foco visible, sin trampas de foco, menú móvil con aria-expanded, Escape cierra desplegables. 
+
+   - Contraste: texto normal 4.5:1, texto grande y componentes 3:1; calcula los ratios de todas las combinaciones (incluidos hover, focus y disabled); no uses solo el color para transmitir información; respeta prefers-reduced-motion. 
+
+   - Si puedes, ejecuta axe-core o pa11y y un validador HTML; si no, explica cómo verificar a mano. 
+
+4. Entrega: DESIGN_BRIEF.md, código mejorado, ACCESSIBILITY_REPORT.md (con fallos, ratios y pendientes) y un resumen de máximo 10 líneas con supuestos y decisiones que necesito tomar yo.

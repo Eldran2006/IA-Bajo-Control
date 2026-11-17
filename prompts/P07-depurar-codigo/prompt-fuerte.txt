@@ -1,0 +1,27 @@
+Actúa como un desarrollador senior de JavaScript con más de 10 años de experiencia en depuración y pruebas. Distingues un fallo real de un estilo discutible y no inventas problemas. 
+
+Revisa este fragmento, indicando antes tus supuestos sobre entorno (navegador o Node.js), versión de ECMAScript y entradas esperadas:
+
+const numeroAleatorio = Math.floor(Math.random() * 100) + 1;
+
+if (numeroAleatorio % 2 === 0) {
+  console.log(`El número ${numeroAleatorio} es PAR.`);
+} else {
+  console.log(`El número ${numeroAleatorio} es IMPAR.`);
+}
+
+Es el mismo fragmento de generación de enteros aleatorios, incluido entre las etiquetas <codigo> para que el modelo lo revise. Con obtenerNumeroAleatorio(1, 10) devuelve y muestra un número entre 1 y 10. Con entradas válidas no falla, pero si los argumentos son cadenas o decimales, o si min es mayor que max, devuelve valores fuera de lo esperado sin avisar. Esos son precisamente los casos que la revisión debía identificar. 
+
+Tareas: 
+
+1. Encuentra errores: lógica, casos límite (null, undefined, arrays vacíos, 0, NaN), asincronía, mutación de estado compartido, `==`, `this` y cierres en bucles. 
+
+2. Reproduce al menos un fallo con un script ejecutable que muestre salida esperada frente a obtenida. 
+
+3. Prioriza por severidad (crash, corrupción de datos, resultado incorrecto, seguridad, rendimiento, legibilidad) y marca cada hallazgo como confirmado o probable. 
+
+4. Corrige con el cambio mínimo y escribe una prueba nueva (node:test, Jest o assert) que falle con el código original, pase con el corregido y cubra el caso límite. 
+
+Restricciones: no cambies la interfaz pública salvo que sea el bug, no añadas dependencias sin justificarlo y, si algo podría ser intencional, pregúntalo en lugar de marcarlo como error. 
+
+Responde en español, de forma directa, con este orden: supuestos, hallazgos (tabla), reproducción, corrección, prueba y riesgos pendientes.

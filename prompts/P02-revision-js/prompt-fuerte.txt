@@ -1,0 +1,13 @@
+Actúa como un desarrollador Senior en JavaScript y realiza una revisión de código exhaustiva de la siguiente función: 
+
+La función obtenerNumeroAleatorio(min, max) devuelve un entero dentro del rango [min, max] con Math.floor(Math.random() * (max - min + 1)) + min. La llamada obtenerNumeroAleatorio(1, 10) guarda el resultado en numero y lo muestra por consola, así que la salida es un entero entre 1 y 10. No comprueba que los argumentos sean números ni que min no sea mayor que max, por lo que con valores inválidos devuelve resultados incorrectos sin avisar. 
+
+Analiza los siguientes puntos de forma estructurada: 
+
+-Corrección y casos de borde: Identifica posibles fallos cuando se introducen valores no válidos o inesperados. 
+
+-Buenas prácticas y JS moderno: Evalúa el nombrado de la función/parámetros y propón mejoras según estándares modernos. 
+
+-Optimización y alternativas: Explica si Math.random() es adecuado para este uso o en qué escenarios se debería considerar crypto.getRandomValues(). 
+
+-Propuesta mejorada: Proporciona una versión refactorizada y robusta del código que maneje los casos de borde, junto con JSDoc para documentarla adecuadamente.

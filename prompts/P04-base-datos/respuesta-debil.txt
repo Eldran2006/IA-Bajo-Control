@@ -1,0 +1,37 @@
+Aquí tienes un diseño profesional y modular para la base de datos de una tienda (ecommerce o tienda física). Incluye las entidades clave para gestionar productos, clientes, pedidos e inventario. 
+
+Estructura de Tablas y Relaciones:
+
+categorias
+
+Organiza los productos por grupos. 
+
+1 categoría -> N productos 
+
+
+productos
+
+Almacena el catálogo y nivel de inventario. 
+
+Pertenece a una categoría. 
+
+
+clientes
+
+Guarda información de contacto y compras. 
+
+1 cliente -> N pedidos 
+
+
+pedidos
+
+Registra la transacción principal y su estado. 
+
+Pertenece a un cliente. 
+
+
+detalle_pedidos
+
+Desglosa los artículos comprados en cada pedido. 
+
+Une pedidos y productos.

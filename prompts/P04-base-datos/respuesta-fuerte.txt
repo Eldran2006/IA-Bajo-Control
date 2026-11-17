@@ -1,0 +1,31 @@
+Como Arquitecto de Bases de Datos Senior y desarrollador backend especializado en PHP y JavaScript, he diseñado un esquema relacional altamente optimizado, normalizado (hasta la 3NF) y robusto para la plataforma de comercio electrónico de la cafetería. 
+
+Este diseño prioriza la integridad de los datos, el rendimiento mediante índices estratégicos y la facilidad de consumo para una API REST construida en PHP (utilizando PDO con consultas preparadas) que será consumida dinámicamente desde un frontend en JavaScript (Vanilla, Vue, React, etc.). 
+
+1. Diseño del Esquema Relacional (MySQL / MariaDB) 
+
+A continuación se presenta el script SQL ejecutable, limpio, debidamente comentado e incluyendo restricciones de integridad referencial (FOREIGN KEY), restricciones de validación (CHECK) para asegurar precios y stocks positivos, y los índices clave. 
+
+El script crea la base de datos cafe_ecommerce con codificación utf8mb4 y sus seis tablas: clientes, direcciones, categorias, productos, pedidos y detalle_pedidos, con claves primarias y foráneas. Al ejecutarlo en MySQL o MariaDB no devuelve filas, solo deja la estructura lista para usarla. Las restricciones CHECK impiden cantidades no positivas y precios negativos, y detalle_pedidos guarda el precio unitario del momento de la compra. 
+
+2. Decisiones de Diseño y Normalización (3NF) 
+
+Eliminación de redundancias: La información del cliente y de los productos está completamente desacoplada. Si un cliente actualiza su número de teléfono o dirección, no afecta el historial de sus pedidos anteriores gracias a la tabla intermedia detalle_pedidos, que almacena el precio_unitario histórico del producto al momento exacto de la compra. 
+
+Integridad y Restricciones: Se implementaron restricciones CHECK (precio >= 0, cantidad > 0) nativas de MySQL/MariaDB para blindar la base de datos contra inserciones erróneas desde el backend. Las claves foráneas usan ON DELETE RESTRICT en tablas críticas (como productos y clientes respecto a pedidos) para evitar borrados accidentales de información contable o de transacciones. 
+
+3. Facilitación para el Desarrollo de Endpoints en PHP (API REST) y Consumo en JavaScript 
+
+Este diseño relacional reduce drásticamente la complejidad lógica en el backend en PHP y agiliza las peticiones asíncronas desde el frontend en JavaScript: 
+
+Estructura limpia para Consultas con JOIN: Al normalizar las tablas, el backend en PHP (usando PDO) puede construir consultas eficientes de manera directa. Por ejemplo, al obtener el detalle completo de un pedido para la API (GET /api/pedidos/{id}), se realiza una simple combinación mediante JOIN entre pedidos, direcciones, clientes y detalle_pedidos, devolviendo un objeto JSON estructurado jerárquicamente que el frontend en JavaScript puede renderizar de inmediato. 
+
+Control Transaccional Seguro para Órdenes y Stock (POST /api/pedidos): Gracias a que el esquema separa los pedidos de sus detalles y mantiene una columna stock en productos, el backend en PHP puede implementar transacciones ($pdo->beginTransaction()) de forma sencilla y segura: 
+
+Inserta la cabecera en pedidos. 
+
+Inserta los ítems en detalle_pedidos. 
+
+Ejecuta una sentencia de descuento de inventario (UPDATE productos SET stock = stock - :cantidad WHERE id = :id AND stock >= :cantidad). Si el stock es insuficiente, la transacción se revierte (rollback), garantizando consistencia total en tiempo real. 
+
+Mapeo Directo con Formularios JSON: Las claves foráneas (cliente_id, categoria_id, producto_id) coinciden exactamente con los IDs que el frontend envía en los cuerpos de las peticiones HTTP (fetch o axios), facilitando la validación de payloads y la persistencia directa mediante sentencias preparadas en PHP.

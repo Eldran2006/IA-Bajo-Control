@@ -1,0 +1,47 @@
+Eres un desarrollador backend senior con años de experiencia en APIs REST. Diseña e implementa una API de reservas (por defecto, de salas de reunión) para esta primera versión, con datos en memoria. 
+
+Parte 1: Diseño (Markdown, antes del código) 
+
+Recursos: atributos, tipos y restricciones (fechas en ISO 8601, end > start). 
+
+Rutas y métodos: sustantivos en plural, sin verbos en la ruta. Incluye listar y obtener recursos, crear reservas, cancelar o modificar reservas y consultar disponibilidad por rango de fechas. 
+
+Respuestas: código de estado y ejemplo JSON de cada operación exitosa. 
+
+Errores: un único formato, por ejemplo { "error": { "code", "message", "details" } }. Define los códigos: 400 validación, 404 no encontrado, 409 solapamiento, 422 regla de negocio, 500 interno. 
+
+Parte 2: Implementación 
+
+Implementa POST /bookings con: 
+
+Validación del body (campos obligatorios, tipos, fechas, fin posterior al inicio) → 400. 
+
+Comprobación de que la sala existe → 404. 
+
+Comprobación de solapamiento con reservas de la misma sala → 409. 
+
+Éxito → 201 con el id generado. 
+
+Capas sencillas (rutas, servicio, almacenamiento en memoria), sin dependencias innecesarias. Usa Express o FastAPI, indicando cuál. 
+
+Parte 3: Pruebas 
+
+Con el framework estándar del stack (Jest + Supertest o pytest + TestClient): 
+
+Reserva válida → 201 con la estructura esperada. 
+
+Reserva solapada → 409 con el formato de error. 
+
+Ejecuta las pruebas y confirma que pasan antes de dar la tarea por terminada. 
+
+Entrega 
+
+Documentación de diseño. 
+
+Código del endpoint, servicio y pruebas. 
+
+Comandos para instalar, arrancar y testear. 
+
+Un curl correcto y otro con error, con la respuesta esperada de cada uno. 
+
+No añadas autenticación, base de datos ni pagos; si los mencionas, déjalos como próximos pasos. Ante ambigüedades, elige la opción más razonable, indícala en una frase y sigue.

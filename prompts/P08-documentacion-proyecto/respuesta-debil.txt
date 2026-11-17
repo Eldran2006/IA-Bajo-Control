@@ -1,0 +1,3 @@
+He creado el README.md con la documentación de tu videojuego. Incluye descripción, requisitos, cómo ejecutarlo, controles, generación de niveles, datos del jugador, interfaz y una sección de pendientes.
+
+Faltan datos que solo tú puedes completar: la estructura real de carpetas y archivos (está como plantilla en el apartado correspondiente), la descripción de cada módulo y función, y los sprites de enemigos, suelo, paredes y cofres. Si me pegas el contenido de tus archivos .lua o la lista de carpetas, lo ajusto a tu código real.

@@ -1,0 +1,3 @@
+I will build a complete, modern reservation web application for you. The application will be designed in Spanish to match your initial request, featuring an elegant, responsive interface suitable for a restaurant or service. 
+
+It will use Firebase to save and retrieve reservations in real-time. I will ensure we handle authentication seamlessly in the background and persist the data using the required data paths.

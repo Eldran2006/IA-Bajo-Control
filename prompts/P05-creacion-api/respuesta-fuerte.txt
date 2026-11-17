@@ -1,0 +1,173 @@
+Parte 1: Diseño de la API 
+
+Como opción razonable para esta primera versión, se ha elegido Node.js con Express para la implementación debido a su ligereza, rapidez de configuración y amplio uso en entornos backend. 
+
+1. Recursos, Atributos, Tipos y Restricciones 
+
+Recurso: Room (Sala de Reunión) 
+
+id: string (UUID v4 o alfanumérico generado por el sistema). Identificador único. 
+
+name: string (Obligatorio). Nombre de la sala. 
+
+capacity: integer (Obligatorio, > 0). Aforo máximo de personas. 
+
+Recurso: Booking (Reserva) 
+
+id: string (Generado por el sistema). Identificador único de la reserva. 
+
+roomId: string (Obligatorio). ID de la sala que se desea reservar. 
+
+userId: string (Obligatorio). Identificador del usuario que realiza la reserva. 
+
+start: string (Obligatorio). Fecha y hora de inicio en formato ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ). 
+
+end: string (Obligatorio). Fecha y hora de fin en formato ISO 8601. Restricción: end > start. 
+
+createdAt: string (Automático). Fecha de creación en formato ISO 8601. 
+
+2. Rutas y Métodos (RESTful) 
+
+Se utilizan sustantivos en plural y se evitan verbos en las rutas. 
+
+Método 
+
+Ruta 
+
+Descripción 
+
+GET 
+
+/rooms 
+
+Lista todas las salas de reunión disponibles. 
+
+GET 
+
+/rooms/{roomId} 
+
+Obtiene el detalle de una sala específica. 
+
+GET 
+
+/rooms/{roomId}/availability 
+
+Consulta la disponibilidad de una sala en un rango de fechas (start, end). 
+
+GET 
+
+/bookings 
+
+Lista todas las reservas (permite filtrar opcionalmente por roomId o userId). 
+
+GET 
+
+/bookings/{id} 
+
+Obtiene una reserva por su ID. 
+
+POST 
+
+/bookings 
+
+Crea una nueva reserva. 
+
+PATCH 
+
+/bookings/{id} 
+
+Modifica parcialmente una reserva existente (ej. cambiar fechas o sala). 
+
+DELETE 
+
+/bookings/{id} 
+
+Cancela/elimina una reserva. 
+
+3. Respuestas Exitosas (Códigos y Ejemplos JSON) 
+
+POST /bookings (Creación exitosa) -> 201 Created 
+
+POST /bookings responde 201 Created con la reserva creada en formato JSON. Incluye el id generado por el servidor (bkg_9f8e7d6c5b), la sala y el usuario, las fechas de inicio y fin en ISO 8601 y la marca createdAt. Con esta respuesta el cliente confirma que la reserva se ha guardado y puede conservar su identificador para consultarla después. 
+
+GET /bookings/{id} o GET /rooms/{roomId} -> 200 OK 
+
+GET /rooms/{roomId} devuelve 200 OK con el detalle de una sala: su identificador (room_123), su nombre (Sala Creativa Alpha) y su capacidad de 10 personas. Es un objeto simple, sin lista ni paginación, que sirve para mostrar los datos de una sala concreta. Si el identificador no existiera, la API respondería con un error 404 en el formato común de errores. 
+
+4. Modelo de Errores Unificado 
+
+Todas las respuestas de error siguen estrictamente el siguiente formato JSON: 
+
+Cuando los datos no son válidos, la API responde 400 con el código VALIDATION_ERROR y el mensaje «Los datos proporcionados no son válidos». En details aparece la causa concreta: el campo end debe ser posterior al campo start. Todos los errores usan la misma estructura, un objeto error con code, message y details, lo que permite al cliente tratarlos siempre de la misma forma. 
+
+Definición de Códigos de Error: 
+
+400 Bad Request (VALIDATION_ERROR): Fallo en el esquema, tipos incorrectos, campos faltantes o formato de fecha inválido. 
+
+404 Not Found (NOT_FOUND): El recurso solicitado (sala o reserva) no existe. 
+
+409 Conflict (BOOKING_CONFLICT): Solapamiento de horarios con otra reserva existente en la misma sala. 
+
+422 Unprocessable Entity (BUSINESS_RULE_ERROR): Incumplimiento de reglas de negocio lógicas (ej. intentar reservar en el pasado). 
+
+500 Internal Server Error (INTERNAL_SERVER_ERROR): Error inesperado del servidor. 
+
+Parte 2: Implementación (Express + In-Memory) 
+
+A continuación se muestra la estructura y código del servidor utilizando Express. 
+
+Estructura de Capas 
+
+Almacenamiento (store.js): Base de datos simulada en memoria con una sala pre-creada. 
+
+Servicio (bookingService.js): Lógica de negocio (validación de existencia, control de solapamientos). 
+
+Rutas / Controladores (bookingController.js y app.js): Recepción de peticiones HTTP, validación de esquemas y códigos de respuesta. 
+
+Código Completo (server.js) 
+
+Este server.js arranca un servidor Express con dos salas en memoria (Sala Boardroom y Sala Creativa) y ninguna reserva. Escucha en el puerto indicado por PORT o en el 3000 por defecto, y muestra «Servidor corriendo en puerto» con ese número. Las reservas válidas devuelven 201 con la reserva creada, las salas inexistentes 404 y los solapamientos 409 con el código BOOKING_CONFLICT. Como los datos están en memoria, se pierden al reiniciar. 
+
+Parte 3: Pruebas (Jest + Supertest) 
+
+Las pruebas validan el flujo de éxito (201), el error por solapamiento (409), y la inexistencia de sala (404). 
+
+Código de Pruebas (server.test.js) 
+
+Las pruebas con Jest y Supertest envían peticiones a la aplicación sin levantar un servidor real. Comprueban tres casos de POST /bookings: una reserva válida que devuelve 201 con id y createdAt, una sala inexistente que devuelve 404 y una reserva que se cruza con otra y devuelve 409 con el código BOOKING_CONFLICT. Si la implementación es correcta, Jest muestra las tres pruebas en verde; si alguna falla, indica cuál y qué valor se esperaba. 
+
+Comandos de Instalación, Arranque y Pruebas 
+
+Para poner en marcha el proyecto localmente, ejecuta los siguientes comandos en tu terminal: 
+
+Inicializar proyecto e instalar dependencias: 
+
+Estos comandos crean package.json con los valores por defecto e instalan Express como dependencia, junto con Jest y Supertest como dependencias de desarrollo. La terminal muestra los paquetes añadidos sin errores y el proyecto queda listo para ejecutar la aplicación y las pruebas. No devuelve datos de la API; solo confirma que la instalación se ha completado. 
+
+Configurar package.json para ejecutar tests fácilmente (añade esto en la sección "scripts"): 
+
+Al añadir este bloque a la sección scripts de package.json, npm start ejecuta node server.js y npm test ejecuta jest --runInBand, que lanza las pruebas en un único proceso. El cambio no muestra nada por sí mismo, pero permite arrancar la aplicación y sus pruebas con comandos cortos. Hay que guardar el archivo antes de ejecutar los comandos. 
+
+Ejecutar las pruebas: 
+
+El comando npm test ejecuta Jest y muestra en la terminal un resumen de las pruebas, con PASS para los archivos que cumplen y FAIL para los que fallan. Si la implementación es correcta, las tres pruebas de POST /bookings aparecen en verde y el proceso termina sin error. Si alguna falla, la salida indica el nombre de la prueba y la diferencia entre el valor esperado y el obtenido. 
+
+Ejemplos de uso con curl 
+
+1. Petición correcta (curl con éxito -> 201) 
+
+Este comando envía con curl una petición POST a /bookings, con cabecera JSON y el cuerpo de una reserva para la sala room_1 del 1 de agosto de 2026, de 14:00 a 15:00. Si la sala existe y el horario está libre, el servidor responde 201 Created con la reserva creada, que se muestra a continuación. Es el caso correcto y debe ejecutarse con el servidor en marcha. 
+
+Respuesta esperada (201 Created): 
+
+La respuesta 201 Created devuelve la reserva con un id generado (bkg_abc123xyz), la sala room_1, el usuario user_abc, las fechas de inicio y fin en ISO 8601 y la fecha de creación. Confirma que la reserva se ha guardado en memoria. El id y createdAt cambian en cada ejecución, pero la estructura del objeto es siempre la misma. 
+
+2. Petición errónea por solapamiento (curl con error -> 409) 
+
+Si intentamos reservar de nuevo en el mismo tramo horario anterior: 
+
+Este segundo comando intenta reservar la misma sala (room_1) el mismo día, de 14:30 a 15:30 y con otro usuario. Ese horario se cruza con la reserva anterior de 14:00 a 15:00, así que el servidor no la acepta. Sirve para comprobar que la API protege la sala frente a reservas solapadas, y debe ejecutarse después del primer comando. 
+
+Respuesta esperada (409 Conflict): 
+
+La respuesta 409 Conflict indica que ya existe otra reserva para esa sala en el intervalo solicitado. El cuerpo contiene el error BOOKING_CONFLICT con el mensaje «Ya existe otra reserva para esta sala en el rango de tiempo indicado» y una lista details vacía. El cliente sabe así que el horario está ocupado y no que la petición tenga un formato incorrecto.

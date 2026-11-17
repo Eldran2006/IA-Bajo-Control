@@ -1,0 +1,9 @@
+Encontré estos problemas en el código:
+
+Comilla sobrante al final: la última línea termina en ” (comilla tipográfica) sin abrir ninguna cadena, lo que provocará un error de sintaxis. Debe eliminarse. 
+
+Rango del número aleatorio: Math.floor(Math.random() * 10) + 1 genera valores entre 1 y 10, pero es fácil confundirlo con 0–9. Si la intención era ese rango, está bien; si querías 0–9, sobra el + 1. 
+
+Uso de const con nombres en español: no es un error, pero conviene saber que esPar se calcula una sola vez y está bien; no hay problema funcional. 
+
+Punto y coma inconsistente: la línea if (esPar) { y la de } else { están bien, pero el código mezcla espacios y tabulaciones de sangría. Es cosmético.

@@ -1,0 +1,21 @@
+Actúa como un Arquitecto de Bases de Datos Senior y desarrollador backend especializado en PHP y JavaScript. 
+
+Necesito que diseñes y documentes el esquema completo de una base de datos relacional (compatible con MySQL/MariaDB) para una aplicación web de comercio electrónico de una cafetería. 
+
+La base de datos debe soportar las siguientes entidades y requerimientos de negocio: 
+
+1. Clientes: Gestión de perfiles, datos de contacto y direcciones. 
+
+2. Productos y Categorías: Catálogo de artículos con control de stock en tiempo real y precios. 
+
+3. Pedidos y Detalles de Pedido: Gestión de carritos convertidos en órdenes, estados del pedido y desglose de productos comprados. 
+
+Requerimientos técnicos obligatorios: 
+
+- Diseña el esquema aplicando normalización para evitar redundancias. 
+
+- Incluye tipos de datos adecuados, claves primarias, claves foráneas con restricciones de integridad referencial y restricciones para precios y stocks positivos. 
+
+- Proporciona el código SQL ejecutable limpio y comentado. 
+
+- Explica brevemente cómo este diseño facilita la creación posterior de endpoints en PHP para una API REST que consumirá el frontend en JavaScript.

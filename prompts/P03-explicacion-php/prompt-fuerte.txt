@@ -1,0 +1,31 @@
+Actúa como un desarrollador backend senior especializado en PHP. Necesito que me expliques los fundamentos de PHP de manera práctica y orientada a la producción, tomando como caso de uso la validación de un formulario de reservas en línea. 
+
+Estructura tu respuesta de la siguiente manera: 
+
+1. Conceptos Clave: Explica la función de PHP en el procesado de formularios web. 
+
+2. Código Ejecutable (PHP + HTML): Proporciona un único archivo (reserva.php) funcional que procese el formulario mediante POST. Debe incluir: 
+
+   - Formulario HTML con campos: Nombre, Email, Fecha de reserva y Número de personas. 
+
+   - Saneamiento y sanitización de datos. 
+
+   - Validaciones backend estrictas: 
+
+     - Nombre: Requerido y no vacío. 
+
+     - Email: Formato de correo válido. 
+
+     - Fecha: Debe ser una fecha válida y posterior o igual a la fecha actual. 
+
+     - Personas: Número entero positivo entre 1 y 10. 
+
+   - Manejo de errores claro visualizando los mensajes junto a cada campo o en un bloque de resumen. 
+
+3. Pruebas de Entrada y Salida: 
+
+   - Caso 1 (Entrada Válida): Muestra un conjunto de datos correctos y la salida esperada. 
+
+   - Caso 2 (Entrada Incorrecta): Muestra un conjunto de datos con múltiples errores y la salida esperada con sus correspondientes mensajes de error.
+
+Asegúrate de seguir las mejores prácticas de seguridad actuales en PHP y presentar el código de forma limpia y legible.

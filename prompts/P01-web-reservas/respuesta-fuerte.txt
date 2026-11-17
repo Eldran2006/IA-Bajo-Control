@@ -1,0 +1,61 @@
+1. Requisitos y Alcance del Prototipo 
+
+    Arquitectura y Tecnologías: Desarrollado con HTML5 semántico y CSS3 nativo (utilizando variables CSS, Custom Properties, Flexbox y CSS Grid). Se prescinde totalmente de librerías externas, frameworks JavaScript pesados y dependencias de terceros para garantizar un rendimiento óptimo y una carga casi instantánea. 
+
+    Cabecera Contextual: Incorpora una barra de navegación superior minimalista y limpia con el logotipo institucional del hotel y enlaces contextuales de orientación al usuario. 
+
+    Formulario de Reserva: Estructurado mediante etiquetas semánticas (<fieldset> y <legend>) agrupando campos lógicos: selección de fechas de entrada/salida (<input type="date">), selector de número de huéspedes y tipología de habitación (<select>), junto con los datos de contacto del cliente con validación nativa (required, patrones de formato y tipos de inputs específicos para email y teléfono). 
+
+    Panel de Resumen en Tiempo Real: Un contenedor lateral de tipo "Sticky Card" que refleja de manera inmediata la simulación de una estancia activa, detallando el desglose exacto de costes, tarifas por noche, impuestos aplicados y el total consolidado. 
+
+    Estado de Confirmación: Contiene un botón de acción principal (Call to Action - CTA) con alto contraste visual orientado a la conversión y un aviso de seguridad cifrada. 
+
+    Accesibilidad y Diseño Responsive: Implementación de diseño adaptativo (Mobile-First y soporte avanzado para pantallas de escritorio mediante Grid de doble columna). Contraste de colores optimizado según los estándares de accesibilidad WCAG y etiquetas explícitas (<label>) asociadas a cada control de formulario. 
+
+2. Estructura de Componentes 
+
+La jerarquía del DOM se organiza de forma modular y limpia, facilitando la escalabilidad y el mantenimiento del código: 
+
+    header.site-header: Contenedor principal de la barra superior. 
+
+    .header-container: Envoltorio con ancho máximo alineado. 
+
+    h1.logo: Identificador de marca ("Grand Vista Hotel"). 
+
+    nav.nav-links: Enlaces secundarios de navegación informativa. 
+
+    main.main-container: Cuerpo principal de la vista de checkout. 
+
+    .booking-grid: Estructura en Grid que divide la interfaz en dos columnas (formulario y resumen). 
+
+    Columna Izquierda: Formulario 
+
+    section.form-section: Contenedor principal del proceso de reserva. 
+
+    form.reservation-form: Formulario interactivo. 
+
+    fieldset: Bloque de fechas y selección de servicio. 
+
+    fieldset: Bloque de datos personales del titular. 
+
+    Columna Derecha: Panel de Resumen 
+
+    aside.summary-section: Tarjeta de resumen lateral flotante. 
+
+    .room-preview: Etiquetas descriptivas de la habitación y fechas. 
+
+    ul.cost-breakdown: Listado estructurado con los conceptos económicos. 
+
+    .total-box: Bloque destacado con la suma total. 
+
+    button.btn-confirm: Botón principal de pago y confirmación. 
+
+3. Código Prototipo (HTML + CSS) 
+
+index.html 
+
+Al abrir index.html en el navegador aparece la página de reservas del Grand Vista Hotel, con cabecera, un formulario de fechas (del 10 al 13 de junio de 2026), selectores de huéspedes y de categoría de habitación, y los datos del titular. En el lateral, el resumen muestra una tarifa de 540,00 €, 54,00 € de impuestos y 25,00 € de gestión, con un total estimado de 619,00 €. Las cifras son fijas porque la página no tiene JavaScript, y el botón de confirmación no tiene ninguna acción asociada. 
+
+styles.css 
+
+Al cargar styles.css junto a index.html, la página toma su aspecto: fondo gris claro, tarjetas blancas con bordes redondeados y sombra suave. El diseño usa dos columnas (formulario y resumen) que pasan a una sola por debajo de 900 px, y los grupos de campos se apilan en móvil por debajo de 600 px. Los campos muestran un borde azul al recibir el foco y el botón principal cambia de color al pasar el ratón. El archivo no devuelve datos; solo define el estilo visual. 

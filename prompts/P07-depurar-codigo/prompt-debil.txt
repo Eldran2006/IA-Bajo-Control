@@ -1,0 +1,9 @@
+Encuentra errores en este código:
+
+const numeroAleatorio = Math.floor(Math.random() * 100) + 1;
+
+if (numeroAleatorio % 2 === 0) {
+  console.log(`El número ${numeroAleatorio} es PAR.`);
+} else {
+  console.log(`El número ${numeroAleatorio} es IMPAR.`);
+}

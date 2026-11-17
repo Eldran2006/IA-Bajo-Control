@@ -1,0 +1,71 @@
+Como desarrollador backend senior, entiendo perfectamente que la gestión de formularios en entornos de producción no solo requiere que el código "funcione", sino que debe ser robusto, seguro frente a vectores de ataque comunes (como XSS o Inyección de Datos) y ofrecer una experiencia de usuario clara mediante un manejo de errores preciso. 
+
+A continuación, te presento los fundamentos aplicados al caso de uso solicitado: un sistema seguro de validación y procesamiento de reservas en línea. 
+
+1. Conceptos Clave: PHP en el Procesado de Formularios Web 
+
+En la arquitectura web tradicional, PHP actúa como un lenguaje de procesamiento del lado del servidor (server-side). Cuando un usuario interactúa con un formulario HTML: 
+
+Ciclo Request-Response: El navegador envía los datos introducidos por el usuario mediante un método HTTP (en este caso, POST) al servidor web. PHP intercepta estos datos a través de superglobales ($_POST). 
+
+La Regla de Oro del Backend: Nunca confíes en el cliente. Aunque realices validaciones en el navegador con JavaScript por usabilidad, un atacante puede saltárselas fácilmente utilizando herramientas como cURL o Postman. Por tanto, toda validación y saneamiento debe repetirse y hacerse obligatoriamente en el backend. 
+
+Saneamiento vs Validación: 
+
+Saneamiento: Limpia o elimina caracteres potencialmente peligrosos o no deseados de los datos de entrada (ej. filter_var con flags de saneamiento o funciones como htmlspecialchars para la salida). 
+
+Validación: Comprueba si los datos saneados cumplen con las reglas de negocio establecidas (ej. si un email tiene un formato correcto o si un número está dentro de un rango permitido). 
+
+2. Código Ejecutable (reserva.php) 
+
+Este archivo único combina la estructura HTML del formulario con la lógica de negocio en PHP, aplicando prácticas modernas como el uso de tipos estrictos, manejo de variables con persistencia de estado (para no borrar los datos introducidos si hay errores) y prevención de XSS al renderizar en el HTML. 
+
+Con una petición GET, reserva.php muestra el formulario vacío con los campos Nombre, Email, Fecha de reserva y Número de personas. Con POST, limpia los datos con trim() y valida cada campo: si hay errores, vuelve a mostrar la página con los mensajes en rojo junto a cada campo y conserva lo escrito. Si todo es correcto, muestra «¡Reserva realizada con éxito!» con el nombre y el correo introducidos. Ese mensaje anuncia un correo de confirmación que el código no llega a enviar. 
+
+  
+
+3. Pruebas de Entrada y Salida 
+
+Caso 1: Entrada Válida 
+
+Datos de Entrada (POST): 
+
+nombre: Ana María Gómez 
+
+email: ana.gomez@example.com 
+
+fecha: 2026-06-15 (Asumiendo fecha posterior o igual a la actual) 
+
+personas: 4 
+
+Salida Esperada: 
+
+El sistema valida correctamente todos los campos sin registrar incidencias en el array $errores. 
+
+Se despliega el mensaje de éxito en pantalla: 
+
+¡Reserva realizada con éxito! Gracias, Ana María Gómez. Te hemos enviado un correo de confirmación a ana.gomez@example.com. 
+
+Caso 2: Entrada Incorrecta (Múltiples Errores) 
+
+Datos de Entrada (POST): 
+
+nombre: `` (Vacío) 
+
+email: correo-invalido (Sin formato de email) 
+
+fecha: 2020-01-01 (Fecha pasada) 
+
+personas: 15 (Fuera del rango permitido de 1 a 10) 
+
+Salida Esperada: 
+
+El script detecta las fallas lógicas e interrumpe el flujo de éxito, rellenando el formulario con los valores ingresados (para que el usuario no tenga que reescribir todo) y mostrando los errores individualmente debajo de cada campo correspondiente: 
+
+Nombre: El nombre es requerido y no puede estar vacío. 
+
+Email: El formato del correo electrónico no es válido. 
+
+Fecha: La fecha de reserva debe ser posterior o igual a la actual. 
+
+Personas: El número de personas debe ser un número entero entre 1 y 10.
